@@ -97,5 +97,29 @@ class Deployment(unittest.TestCase):
         self.assertLess(verbs.index("run"), len(verbs) - 1 - verbs[::-1].index("up"))
 
 
+class PublishedImage(unittest.TestCase):
+    def test_compose_defaults_to_the_ampersight_image(self):
+        text = (ROOT / "docker-compose.yml").read_text()
+        self.assertIn(
+            "image: ${ELECTRIC_IMAGE:-ghcr.io/wjdecorte/ampersight:latest}",
+            text,
+        )
+        self.assertNotIn("ghcr.io/wjdecorte/electric-dashboard", text)
+
+    def test_env_example_uses_the_ampersight_image(self):
+        text = (ROOT / ".env.example").read_text()
+        self.assertIn("ELECTRIC_IMAGE=ghcr.io/wjdecorte/ampersight:latest", text)
+        self.assertIn(
+            "# ELECTRIC_IMAGE=ghcr.io/wjdecorte/ampersight:sha-FULL_COMMIT_SHA",
+            text,
+        )
+        self.assertNotIn("ghcr.io/wjdecorte/electric-dashboard", text)
+
+    def test_readme_documents_the_ampersight_image(self):
+        text = (ROOT / "README.md").read_text()
+        self.assertIn("ghcr.io/wjdecorte/ampersight", text)
+        self.assertNotIn("ghcr.io/wjdecorte/electric-dashboard", text)
+
+
 if __name__ == "__main__":
     unittest.main()

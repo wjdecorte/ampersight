@@ -4,7 +4,7 @@ Ampersight is a local electricity dashboard for Synology Container Manager. Impo
 
 ## Deployment pipeline
 
-Push to **master** → GitHub Actions tests the application → builds Intel (`amd64`) and ARM (`arm64`) images → publishes to **ghcr.io/wjdecorte/electric-dashboard** → the NAS pulls and recreates project **electric**.
+Push to **master** → GitHub Actions tests the application → builds Intel (`amd64`) and ARM (`arm64`) images → publishes to **ghcr.io/wjdecorte/ampersight** → the NAS pulls and recreates project **electric**.
 
 GitHub never connects to your NAS. No NAS credentials, inbound port forwarding or self-hosted runner are needed. GitHub Actions uses its automatically provided GITHUB_TOKEN with package-write permission; no publishing token must be added to repository secrets. Pull requests run tests without publishing.
 
@@ -67,7 +67,7 @@ Enable failure notifications in DSM if desired. The task polls the registry; it 
 Copy .env.example to .env and set ELECTRIC_IMAGE to a published SHA tag:
 
 ```text
-ELECTRIC_IMAGE=ghcr.io/wjdecorte/electric-dashboard:sha-FULL_COMMIT_SHA
+ELECTRIC_IMAGE=ghcr.io/wjdecorte/ampersight:sha-FULL_COMMIT_SHA
 ```
 
 Then run update.sh. The .env file is ignored by Git. Pinning holds that image until the setting is changed. To resume latest updates, set the image back to the latest tag.
