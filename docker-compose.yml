@@ -22,7 +22,7 @@ services:
         max-size: "10m"
         max-file: "3"
   electric-dashboard:
-    image: ${ELECTRIC_IMAGE:-ghcr.io/wjdecorte/electric-dashboard:latest}
+    image: ${ELECTRIC_IMAGE:-ghcr.io/wjdecorte/ampersight:latest}
     restart: unless-stopped
     depends_on:
       db:
